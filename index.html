@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon Link -->
+    <link rel="icon" type="image/x-icon" href="E:\Downloads\PingCheckerApp\Ping Check App\favicon.ico">
+
+    <title>Ping Checker</title>
+    <style>
+      #ip1,
+      #ip2,
+      #ip3,
+      #ip4,
+      #ip5,
+      #ip6,
+      #ip7,
+      #ip8,
+      #ip9,
+      #ip10,
+      #ip11,
+      #ip12,
+      #ip13,
+      #ip14,
+      #ip15,
+      #ip16,
+      #ip17,
+      #ip18,
+      #ip19,
+      #ip20,
+      #ip21,
+      #ip22,
+      #ip23,
+      #ip24,
+      #ip25,
+      #ip26,
+      #ip27,
+      #ip28,
+      #ip29,
+      #ip30 {
+        width: 50%;
+        padding: 10px;
+        font-size: 15px;
+        margin-bottom: 5px;
+        margin-top: 5px;
+      }
+      #ok {
+        color: black;
+        width: 10%;
+        font-size: 15px;
+        height: 38px;
+      }
+      .status-box {
+        margin-top: 10px;
+        margin-left: 5px;
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        background-color: rgb(71, 67, 67);
+        border: 2px solid black;
+        font-weight: bold;
+        border-radius: 50%;
+        color: rgb(71, 67, 67);
+      }
+      button:active {
+        animation: clickEffect 0.1s ease-out;
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      #submitButton {
+        width: 100%;
+        background-color: blue;
+        color: white;
+        border-radius: 5px;
+        transform: scale(1);
+        padding: 10px;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        position: relative;
+      }
+
+      /* Spinner styles */
+      .spinner {
+        width: 20px;
+        height: 20px;
+        border: 3px solid white;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s linear infinite;
+        display: none; /* Hidden initially */
+      }
+
+      /* Spinner animation */
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .waterImage {
+        float: right;
+        position: relative;
+        font-size: 2rem; /* Adjust size as needed */
+        color: rgba(0, 0, 0, 0.1); /* Transparent text */
+        font-weight: bold;
+        /* Slant the text */
+        white-space: nowrap; /* Prevent text wrapping */
+        user-select: none; /* Make text unselectable */
+        pointer-events: none; /* Ignore pointer events */
+      }
+
+      /* Disable button while loading */
+      .loading {
+        opacity: 0.8;
+        cursor: not-allowed;
+      }
+
+      .spinner.active {
+        display: inline-block;
+      }
+      /* **************************clicking effect************************** */
+      @keyframes clickEffect {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        background-color: green;
+        padding: 0;
+        margin: 0;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      "
+    >
+      <h1
+        style="
+          padding: 1px;
+          padding: 0;
+          margin: 0;
+          padding: 1px;
+          justify-content: center;
+          color: white;
+        "
+      >
+        Ping Checker
+      </h1>
+    </div>
+
+    <div
+      style="
+        display: flex;
+        justify-content: center;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+        border-radius: 5px;
+        margin-bottom: 5px;
+      "
+    >
+      <input
+        type="file"
+        id="fileInput"
+        accept=".txt"
+        style="
+          margin-left: auto;
+          /* background-color: green; */
+          border-radius: 2px;
+          color: black;
+          /* margin-top: 10px; */
+        "
+      />
+      <!-- <button id="loadIPs">Load IPs from File</button> -->
+    </div>
+
+    <div style="display: flex; justify-content: center">
+      <div style="width: 33%; border: 2px solid black; height: 80vh">
+        <!-- ip1 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button
+            class="status-box"
+            id="box1"
+            style="width: 30px; height: 30px"
+          ></button>
+          <!-- value="192.168.1.51" -->
+          <input
+            type="text"
+            id="ip1"
+            name="ip"
+            placeholder="Enter IP Address..."
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt1" style="margin: 0"></p>
+        </div>
+
+        <!-- &nbsp; &nbsp; GPS -->
+        <!-- ip2 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button
+            class="status-box"
+            id="box2"
+            style="width: 30px; height: 30px"
+          ></button>
+
+          <!-- value="192.168.1.21"  -->
+          <input
+            type="text"
+            id="ip2"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt2" style="margin: 0"></p>
+        </div>
+
+        <!-- ip3 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button
+            class="status-box"
+            id="box3"
+            style="width: 30px; height: 30px"
+          ></button>
+          <!-- value="192.168.1.3" -->
+          <input
+            type="text"
+            id="ip3"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt3" style="margin: 0"></p>
+        </div>
+
+        <!-- ip4 -->
+        <div
+          class="col"
+          style="display: flex; align-items: center; gap: 10px"
+          style="display: flex; align-items: center; gap: 10px"
+        >
+          <button
+            class="status-box"
+            id="box4"
+            style="width: 30px; height: 30px"
+          ></button>
+
+          <input
+            type="text"
+            id="ip4"
+            name="ip"
+            placeholder="Enter IP Address..."
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+
+          <p id="txt4" style="margin: 0"></p>
+        </div>
+
+        <!-- ip5 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box5"></button>
+          <!-- value="192.168.1.5" -->
+          <input
+            type="text"
+            id="ip5"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt5" style="margin: 0"></p>
+        </div>
+
+        <!-- ip6 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box6"></button>
+          <!-- value="192.168.1.6" -->
+          <input
+            type="text"
+            id="ip6"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt6" style="margin: 0"></p>
+        </div>
+
+        <!-- ip7 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box7"></button>
+          <!-- value="192.168.1.7" -->
+          <input
+            type="text"
+            id="ip7"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt7" style="margin: 0"></p>
+        </div>
+
+        <!-- ip8 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box8"></button>
+          <!-- value="192.168.1.8" -->
+          <input
+            type="text"
+            id="ip8"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt8" style="margin: 0"></p>
+        </div>
+
+        <!-- ip9 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box9"></button>
+          <input
+            type="text"
+            id="ip9"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt9" style="margin: 0"></p>
+        </div>
+
+        <!-- ip10 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box10"></button>
+          <input
+            type="text"
+            id="ip10"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt10" style="margin: 0"></p>
+        </div>
+      </div>
+      <div style="width: 33%; border: 2px solid black; height: 80vh">
+        <!-- ip11 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box11"></button>
+          <input
+            type="text"
+            id="ip11"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt11" style="margin: 0"></p>
+        </div>
+
+        <!-- ip12 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box12"></button>
+
+          <!-- value="192.168.1." -->
+          <input
+            type="text"
+            id="ip12"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt12" style="margin: 0"></p>
+        </div>
+
+        <!-- ip3 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box13"></button>
+          <input
+            type="text"
+            id="ip13"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt13" style="margin: 0"></p>
+        </div>
+
+        <!-- ip14 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box14"></button>
+          <input
+            type="text"
+            id="ip14"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt14" style="margin: 0"></p>
+        </div>
+
+        <!-- ip15 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box15"></button>
+          <input
+            type="text"
+            id="ip15"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt15" style="margin: 0"></p>
+        </div>
+
+        <!-- ip16 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box16"></button>
+          <input
+            type="text"
+            id="ip16"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt16" style="margin: 0"></p>
+        </div>
+
+        <!-- ip17 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box17"></button>
+          <!-- value="192.168.1.2"  -->
+          <input
+            type="text"
+            id="ip17"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt17" style="margin: 0"></p>
+        </div>
+
+        <!-- ip18 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box18"></button>
+          <input
+            type="text"
+            id="ip18"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt18" style="margin: 0"></p>
+        </div>
+
+        <!-- ip19 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box19"></button>
+          <input
+            type="text"
+            id="ip19"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt19" style="margin: 0"></p>
+        </div>
+
+        <!-- ip20 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box20"></button>
+          <input
+            type="text"
+            id="ip20"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt20" style="margin: 0"></p>
+        </div>
+      </div>
+      <div style="width: 33%; border: 2px solid black; height: 80vh">
+        <!-- ip21 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box21"></button>
+          <input
+            type="text"
+            id="ip21"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt21" style="margin: 0"></p>
+        </div>
+
+        <!-- ip22 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box22"></button>
+
+          <input
+            type="text"
+            id="ip22"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt22" style="margin: 0"></p>
+        </div>
+
+        <!-- ip23 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box23"></button>
+          <input
+            type="text"
+            id="ip23"
+            name="ip"
+            placeholder="Enter IP  Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt23" style="margin: 0"></p>
+        </div>
+
+        <!-- ip24 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box24"></button>
+          <input
+            type="text"
+            id="ip24"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt24" style="margin: 0"></p>
+        </div>
+
+        <!-- ip25 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box25"></button>
+          <input
+            type="text"
+            id="ip25"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt25" style="margin: 0"></p>
+        </div>
+
+        <!-- ip26 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box26"></button>
+          <input
+            type="text"
+            id="ip26"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt26" style="margin: 0"></p>
+        </div>
+
+        <!-- ip27 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box27"></button>
+          <input
+            type="text"
+            id="ip27"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt27" style="margin: 0"></p>
+        </div>
+
+        <!-- ip28 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box28"></button>
+          <input
+            type="text"
+            id="ip28"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt28" style="margin: 0"></p>
+        </div>
+
+        <!-- ip29 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box29"></button>
+          <input
+            type="text"
+            id="ip29"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address"
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt29" style="margin: 0"></p>
+        </div>
+
+        <!-- ip30 -->
+        <div class="col" style="display: flex; align-items: center; gap: 10px">
+          <button class="status-box" id="box30"></button>
+          <input
+            type="text"
+            id="ip30"
+            name="ip"
+            placeholder="Enter IP Address................"
+            pattern="^((25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[0-1]?[0-9][0-9]?)$"
+            title="Please enter a valid IP address "
+            required
+            style="
+              width: 300px;
+              height: 30px;
+              padding: 5px;
+              border: 1px solid gray;
+              border-radius: 5px;
+            "
+          />
+          <p id="txt30" style="margin: 0"></p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 12px; border-radius: 5px">
+      <button id="submitButton">
+        <h1 style="margin: 0; font-size: 18px">Submit</h1>
+        <div class="spinner" id="spinner"></div>
+      </button>
+    </div>
+
+    <div class="waterImage">Developed By:Kundhana, WEB Developer</div>
+    <div class="">Date: 28/01/2025</div>
+
+    <div id="errorMsg"></div>
+
+    <script>
+      // **********************************************************************submit button alert message**************************************************************
+      document
+        .getElementById("submitButton")
+        .addEventListener("click", function () {
+          let anyFilled = false;
+
+          document.querySelectorAll("input[name='ip']").forEach((input) => {
+            // console.log(input);
+            if (input.value.trim() !== "") {
+              anyFilled = true;
+            }
+          });
+
+          if (!anyFilled) {
+            alert("Please enter at least one IP address before submitting.");
+          } else {
+          }
+        });
+      // ********************************************************************** browsing the file from pc **************************************************************
+      var intervalId = "";
+      document
+        .getElementById("fileInput")
+        .addEventListener("change", function (event) {
+          const file = event.target.files[0];
+
+          if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+              const data_frm_file = e.target.result;
+              console.log(data_frm_file);
+
+              const lines = data_frm_file.split("\n");
+
+              const ipArray = [];
+
+              const inputBoxes = document.querySelectorAll("input[name='ip']");
+              const textFields = document.querySelectorAll("p[id^='txt']");
+
+              lines.forEach((line, index) => {
+                const parts = line.trim().split(/\s+/);
+
+                if (
+                  parts.length >= 2 &&
+                  inputBoxes[index] &&
+                  textFields[index]
+                ) {
+                  const ip = parts[0];
+                  const label = parts.slice(1).join(" ");
+
+                  // ipArray.push({ ip, label });
+                  inputBoxes[index].value = ip;
+                  textFields[index].textContent = label;
+                }
+              });
+
+              // console.log("Parsed Data Array:", ipArray);
+            };
+
+            reader.onerror = function () {
+              console.error("Error reading file");
+            };
+
+            reader.readAsText(file);
+          }
+        });
+
+      // ********************************************************************** validation of ip and displaying output  **************************************************************
+      var TextBoxID = [
+        "ip1",
+        "ip2",
+        "ip3",
+        "ip4",
+        "ip5",
+        "ip6",
+        "ip7",
+        "ip8",
+        "ip9",
+        "ip10",
+        "ip11",
+        "ip12",
+        "ip13",
+        "ip14",
+        "ip15",
+        "ip16",
+        "ip17",
+        "ip18",
+        "ip19",
+        "ip20",
+        "ip21",
+        "ip22",
+        "ip23",
+        "ip24",
+        "ip25",
+        "ip26",
+        "ip27",
+        "ip28",
+        "ip29",
+        "ip30",
+      ];
+      var RoundBtnID = [
+        "box1",
+        "box2",
+        "box3",
+        "box4",
+        "box5",
+        "box6",
+        "box7",
+        "box8",
+        "box9",
+        "box10",
+        "box11",
+        "box12",
+        "box13",
+        "box14",
+        "box15",
+        "box16",
+        "box17",
+        "box18",
+        "box19",
+        "box20",
+        "box21",
+        "box22",
+        "box23",
+        "box24",
+        "box25",
+        "box26",
+        "box27",
+        "box28",
+        "box29",
+        "box30",
+      ];
+
+      document
+        .getElementById("submitButton")
+        .addEventListener("click", async () => {
+          const cols = document.querySelectorAll(".col");
+          const resultArray = [];
+          TextBoxID.forEach((element, index) => {
+            var item = document.getElementById(element);
+            item.style.backgroundColor = "white";
+          });
+
+          var error = document.getElementById("errorMsg");
+          if (error) {
+            error.innerHTML = "";
+          }
+
+          RoundBtnID.forEach((element, index) => {
+            var item = document.getElementById(element);
+            item.style.backgroundColor = "rgb(71, 67, 67)";
+          });
+
+          cols.forEach((col) => {
+            const input = col.querySelector('input[type="text"]');
+            const inputid = col.querySelector('inputid[id="ip"]');
+            const button = col.querySelector(".status-box");
+            if (input && input.value.trim() !== "") {
+              resultArray.push({
+                buttonId: button.id,
+                inputId: input.id,
+                inputValue: input.value,
+              });
+            }
+          });
+
+          if (intervalId) {
+            clearInterval(intervalId);
+          }
+
+          intervalId = setInterval(async () => {
+            try {
+              var results = {};
+              const response = await fetch("/submit-ip", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(resultArray),
+              });
+              results = await response.json();
+
+              // console.log(results);
+
+              // **********************************************************************changing the inputbox bg-color(invalidIP) **************************************************************
+              if (Array.isArray(results) && typeof results[0] === "string") {
+                // submitButton.classList.remove("loading");
+                // spinner.classList.remove("active");
+                for (let ele of results) {
+                  var item = document.getElementById(ele);
+                  // console.log(item);
+                  if (item) {
+                    item.style.backgroundColor = "red";
+                  } else {
+                    item.style.backgroundColor = "white";
+                  }
+                  if (error) {
+                    error.innerHTML =
+                      "<span style='color: red; font-weight:bold;margin-top:15px'>Please Enter Valid IP for PING</span>";
+                  }
+                }
+              }
+              // **********************************************************************changing the checkbox bg-color **************************************************************
+              if (Array.isArray(results) && typeof results[0] === "object") {
+                // submitButton.classList.remove("loading");
+                // spinner.classList.remove("active");
+                results.forEach((item) => {
+                  const status = item.status;
+                  const btnId = item.buttonId;
+                  const button = document.getElementById(btnId);
+                  if (status) {
+                    button.style.backgroundColor = "green";
+                  } else {
+                    button.style.backgroundColor = "red";
+                  }
+                });
+              }
+              // **********************************************************************Loading Button **************************************************************
+
+              const submitButton = document.getElementById("submitButton");
+              const spinner = document.getElementById("spinner");
+
+              submitButton.addEventListener("click", () => {
+                // Add loading state
+                submitButton.classList.add("loading");
+                spinner.classList.add("active");
+                // Use setTimeout(0) to allow the browser to render the spinner
+                setTimeout(() => {
+                  spinner.classList.add("active");
+                }, 0);
+                // Simulate an API call or some response delay
+                setTimeout(() => {
+                  submitButton.classList.remove("loading");
+                  spinner.classList.remove("active");
+                }, 3000);
+              });
+
+              // **********************************************************************end of c **************************************************************
+            } catch (error) {
+              console.error("Error sending ip:", error);
+            }
+          }, 10000);
+        });
+    </script>
+  </body>
+</html>
